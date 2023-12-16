@@ -21,6 +21,7 @@ function quiz(state = initialQuizState, action) {
     case "SET_QUIZ_INTO_STATE":{
       console.log('payload = ', action.payload);
       return (state = action.payload);
+      // return { ...state, quiz: action.payload }
     }  
     default:
       return state;

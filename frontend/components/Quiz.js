@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchQuiz } from "../state/action-creators";
+import { selectAnswer } from "../state/action-creators"
 
 function Quiz(props) {
   useEffect(() => {
     if (!props.quiz) props.fetchQuiz();
   }, []);
 
+  const { selectAnswer } = props;
   console.log("props = ", props);
   // const { quiz, fetchQuiz } = props;
   // console.log('quiz = ', quiz);
@@ -25,7 +27,7 @@ function Quiz(props) {
             <div id="quizAnswers">
               <div className="answer selected">
                 {props.quiz.answers[0].text}
-                <button>SELECTED</button>
+                <button >SELECTED</button>
               </div>
 
               <div className="answer">
@@ -45,7 +47,10 @@ function Quiz(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { quiz: state.quiz };
+  return { 
+    quiz: state.quiz,
+    selected: state.selected };
 };
 
-export default connect(mapStateToProps, { fetchQuiz })(Quiz);
+export default connect(mapStateToProps, { fetchQuiz, selectAnswer })(Quiz);
+// props.quiz.answers[0].answer_id

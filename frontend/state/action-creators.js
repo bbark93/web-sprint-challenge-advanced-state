@@ -10,7 +10,9 @@ export function moveCounterClockwise() {
   return { type: type.MOVE_COUNTERCLOCKWISE }
 }
 
-export function selectAnswer() { }
+export function selectAnswer(payload) {
+  return { type: type.SET_SELECTED_ANSWER, payload: payload }
+}
 
 export function setMessage() { }
 
