@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchQuiz } from "../state/action-creators";
-import { selectAnswer } from "../state/action-creators"
+import { selectAnswer } from "../state/action-creators";
 
 function Quiz(props) {
   useEffect(() => {
@@ -10,8 +10,9 @@ function Quiz(props) {
 
   const { selectAnswer } = props;
   console.log("props = ", props);
-  // const { quiz, fetchQuiz } = props;
+  // const { quiz } = props;
   // console.log('quiz = ', quiz);
+  // const question = quiz.question;
   // console.log('quiz.question = ', quiz.question);
   // console.log('quiz.answers = ', quiz.answers);
   // console.log('quiz.quiz_id = ', quiz.quiz_id);
@@ -19,20 +20,28 @@ function Quiz(props) {
   return (
     <div id="wrapper">
       {
-        // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
+        // quiz already in state? Let's use that, otherwise render "Loading next quiz...""answer selected"
         props.quiz ? (
           <>
             <h2>{props.quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
+              <div className={props.selectedAnswer == props.quiz.answers[0].answer_id ? "answer selected" : "answer"}>
                 {props.quiz.answers[0].text}
-                <button >SELECTED</button>
+                <button
+                  onClick={() => selectAnswer(props.quiz.answers[0].answer_id)}
+                >
+                  {props.selectedAnswer == props.quiz.answers[0].answer_id ? "SELECTED" : "Select"}
+                </button>
               </div>
 
-              <div className="answer">
+              <div className={props.selectedAnswer == props.quiz.answers[1].answer_id ? "answer selected" : "answer"}>
                 {props.quiz.answers[1].text}
-                <button>Select</button>
+                <button
+                  onClick={() => selectAnswer(props.quiz.answers[1].answer_id)}
+                >
+                  {props.selectedAnswer == props.quiz.answers[1].answer_id ? "SELECTED" : "Select"}
+                </button>
               </div>
             </div>
 
@@ -47,9 +56,10 @@ function Quiz(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { 
+  return {
     quiz: state.quiz,
-    selected: state.selected };
+    selectedAnswer: state.selectedAnswer,
+  };
 };
 
 export default connect(mapStateToProps, { fetchQuiz, selectAnswer })(Quiz);

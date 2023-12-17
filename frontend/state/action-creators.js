@@ -32,7 +32,7 @@ export function fetchQuiz() {
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     dispatch(setQuiz(null))
 
-    axios.get('http://localhost:9000/api/quiz/next')
+   axios.get('http://localhost:9000/api/quiz/next')
       .then(res => {
         dispatch(setQuiz(res.data))
       })
