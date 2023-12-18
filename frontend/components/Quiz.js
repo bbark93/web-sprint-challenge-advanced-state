@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchQuiz } from "../state/action-creators";
-import { selectAnswer } from "../state/action-creators";
+import { fetchQuiz, selectAnswer, postAnswer } from "../state/action-creators";
 
 function Quiz(props) {
   useEffect(() => {
     if (!props.quiz) props.fetchQuiz();
   }, []);
 
-  const { selectAnswer } = props;
+  const { selectAnswer, postAnswer } = props;
   console.log("props = ", props);
   // const { quiz } = props;
   // console.log('quiz = ', quiz);
@@ -45,7 +44,7 @@ function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" onClick={() => postAnswer({quiz_id: props.quiz.quiz_id, answer_id: props.selectedAnswer})} >Submit answer</button>
           </>
         ) : (
           "Loading next quiz..."
@@ -62,5 +61,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchQuiz, selectAnswer })(Quiz);
-// props.quiz.answers[0].answer_id
+export default connect(mapStateToProps, { fetchQuiz, selectAnswer, postAnswer })(Quiz);

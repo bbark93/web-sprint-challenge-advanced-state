@@ -21,7 +21,6 @@ function quiz(state = initialQuizState, action) {
     case "SET_QUIZ_INTO_STATE":{
       console.log('payload = ', action.payload);
       return (state = action.payload);
-      // return { ...state, quiz: action.payload }
     }  
     default:
       return state;
@@ -41,7 +40,14 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 const initialMessageState = "";
 function infoMessage(state = initialMessageState, action) {
-  return state;
+  switch (action.type) {
+    case "SET_INFO_MESSAGE": {
+      return (state = action.payload);
+    }  
+    default:
+      return state;
+  }
+  
 }
 
 const initialFormState = {
