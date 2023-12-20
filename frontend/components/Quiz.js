@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchQuiz, selectAnswer, postAnswer } from "../state/action-creators";
 
@@ -6,6 +6,8 @@ function Quiz(props) {
   useEffect(() => {
     if (!props.quiz) props.fetchQuiz();
   }, []);
+  
+  const [ isDisabled, setDisabled ] = useState(true);
 
   const { selectAnswer, postAnswer, selectedAnswer } = props;
   console.log('selectedAnswer = ', selectedAnswer);
@@ -27,7 +29,10 @@ function Quiz(props) {
               >
                 {props.quiz.answers[0].text}
                 <button
-                  onClick={() => selectAnswer(props.quiz.answers[0].answer_id)}
+                  onClick={() => {
+                    setDisabled(false);
+                    selectAnswer(props.quiz.answers[0].answer_id);
+                  }}
                 >
                   {props.selectedAnswer == props.quiz.answers[0].answer_id
                     ? "SELECTED"
@@ -44,7 +49,10 @@ function Quiz(props) {
               >
                 {props.quiz.answers[1].text}
                 <button
-                  onClick={() => selectAnswer(props.quiz.answers[1].answer_id)}
+                  onClick={() => {
+                    setDisabled(false);
+                    selectAnswer(props.quiz.answers[1].answer_id);
+                  }}
                 >
                   {props.selectedAnswer == props.quiz.answers[1].answer_id
                     ? "SELECTED"
@@ -61,7 +69,7 @@ function Quiz(props) {
                   answer_id: props.selectedAnswer,
                 })
               }
-              // disabled={selectAnswer === null ? true : false}
+              disabled={isDisabled}
             >
               Submit answer
             </button>
