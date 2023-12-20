@@ -7,15 +7,8 @@ function Quiz(props) {
     if (!props.quiz) props.fetchQuiz();
   }, []);
 
-  const { selectAnswer, postAnswer } = props;
-  console.log("props = ", props);
-  // const { quiz } = props;
-  // console.log('quiz = ', quiz);
-  // const question = quiz.question;
-  // console.log('quiz.question = ', quiz.question);
-  // console.log('quiz.answers = ', quiz.answers);
-  // console.log('quiz.quiz_id = ', quiz.quiz_id);
-
+  const { selectAnswer, postAnswer, selectedAnswer } = props;
+  console.log('selectedAnswer = ', selectedAnswer);
   return (
     <div id="wrapper">
       {
@@ -25,26 +18,53 @@ function Quiz(props) {
             <h2>{props.quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className={props.selectedAnswer == props.quiz.answers[0].answer_id ? "answer selected" : "answer"}>
+              <div
+                className={
+                  props.selectedAnswer == props.quiz.answers[0].answer_id
+                    ? "answer selected"
+                    : "answer"
+                }
+              >
                 {props.quiz.answers[0].text}
                 <button
                   onClick={() => selectAnswer(props.quiz.answers[0].answer_id)}
                 >
-                  {props.selectedAnswer == props.quiz.answers[0].answer_id ? "SELECTED" : "Select"}
+                  {props.selectedAnswer == props.quiz.answers[0].answer_id
+                    ? "SELECTED"
+                    : "Select"}
                 </button>
               </div>
 
-              <div className={props.selectedAnswer == props.quiz.answers[1].answer_id ? "answer selected" : "answer"}>
+              <div
+                className={
+                  props.selectedAnswer == props.quiz.answers[1].answer_id
+                    ? "answer selected"
+                    : "answer"
+                }
+              >
                 {props.quiz.answers[1].text}
                 <button
                   onClick={() => selectAnswer(props.quiz.answers[1].answer_id)}
                 >
-                  {props.selectedAnswer == props.quiz.answers[1].answer_id ? "SELECTED" : "Select"}
+                  {props.selectedAnswer == props.quiz.answers[1].answer_id
+                    ? "SELECTED"
+                    : "Select"}
                 </button>
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onClick={() => postAnswer({quiz_id: props.quiz.quiz_id, answer_id: props.selectedAnswer})} >Submit answer</button>
+            <button
+              id="submitAnswerBtn"
+              onClick={() =>
+                postAnswer({
+                  quiz_id: props.quiz.quiz_id,
+                  answer_id: props.selectedAnswer,
+                })
+              }
+              // disabled={selectAnswer === null ? true : false}
+            >
+              Submit answer
+            </button>
           </>
         ) : (
           "Loading next quiz..."
@@ -61,4 +81,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchQuiz, selectAnswer, postAnswer })(Quiz);
+export default connect(mapStateToProps, {
+  fetchQuiz,
+  selectAnswer,
+  postAnswer,
+})(Quiz);
