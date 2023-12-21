@@ -55,7 +55,7 @@ export function postAnswer(answer) {
       .then(res => {
         dispatch(selectAnswer(''));
         dispatch(setMessage(res.data.message));
-        dispatch(fetchQuiz);
+        dispatch(fetchQuiz());
       })
       .catch(err => {
         console.log(err.message);

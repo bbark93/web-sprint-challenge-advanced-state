@@ -63,7 +63,7 @@ function Quiz(props) {
 
             <button
               id="submitAnswerBtn"
-              onClick={() =>
+              onClick={() => 
                 postAnswer({
                   quiz_id: props.quiz.quiz_id,
                   answer_id: props.selectedAnswer,
